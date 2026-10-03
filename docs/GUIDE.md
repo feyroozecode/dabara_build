@@ -2,7 +2,7 @@
 
 **Dabara** is a programming language with **Hausa keywords**, so you can learn to code in
 your own language. This guide takes you from "hello world" to functions, loops, and the
-standard library. For implementation internals, see [REFERENCE.md](REFERENCE.md).
+standard library. For the exact rules, see the [language reference](LANGUAGE.md).
 
 ---
 
@@ -730,9 +730,9 @@ and function, and **hover** text from `docs/KEYWORDS.md`. It does not do go-to-d
 
 ## 13. Where to next
 
-- **Tutorials** (French, step-by-step): `docs/tuts/`
-- **Language specification**: `docs/specs/SPECIFICATION.md`
-- **Example programs**: `examples/*.ha`
-- **Contributors / internals**: [REFERENCE.md](REFERENCE.md)
+- **The exact rules**: [LANGUAGE.md](LANGUAGE.md)
+- **Every keyword and function**: [KEYWORDS.md](KEYWORDS.md)
+- **What changed in each version**: [RELEASE_NOTES.md](RELEASE_NOTES.md)
+- **Example programs**: the `examples/` folder — small programs, and a three-file app in `examples/v0.5/kasuwa/`
 
 Barka da koyo! (Happy learning!)

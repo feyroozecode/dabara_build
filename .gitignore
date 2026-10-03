@@ -1,0 +1,8 @@
+# Binaries and archives live in GitHub Releases, never in git (scripts/check_public_tree.sh enforces it)
+*.tar.gz
+*.tgz
+*.zip
+*.exe
+*.vsix
+dist/
+.DS_Store

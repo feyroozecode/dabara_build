@@ -1,0 +1,25 @@
+name: Guard
+
+# Runs on every push and pull request. This repository must stay source-free: only installers, docs,
+# examples and scripts. These checks need no dabara binary.
+on:
+  push:
+  pull_request:
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: No source, no binaries, no internals in what people read
+        run: sh scripts/check_public_tree.sh
+
+      - name: The guard itself works (plants violations, expects rejection)
+        run: sh scripts/test_check_public_tree.sh
+
+      - name: Lint the shell scripts
+        run: shellcheck -s sh --severity=warning install.sh scripts/*.sh
+
+      - name: "Installer tests (fake local release — checksums, failures, options, platform detection)"
+        run: sh scripts/test_install.sh

@@ -1,0 +1,66 @@
+name: Verify release
+
+# Every time a release is published, install it THE WAY A STRANGER WOULD (the one-line installers on a
+# clean machine) on each platform and run the smoke test. A red run flips the release to "pre-release".
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to verify (e.g. v0.6.0-beta.1)"
+        required: true
+
+permissions:
+  contents: write   # only to mark a failing release as a pre-release
+
+env:
+  TAG: ${{ github.event.release.tag_name || github.event.inputs.tag }}
+
+jobs:
+  verify:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install (macOS / Linux) with the public one-liner's script
+        if: runner.os != 'Windows'
+        run: |
+          sh install.sh --version "$TAG"
+          echo "DABARA_BIN=$HOME/.dabara/bin/dabara" >> "$GITHUB_ENV"
+
+      - name: Install (Windows) with the public script
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          & ./install.ps1 -Version $env:TAG
+          "DABARA_BIN=$env:USERPROFILE\.dabara\bin\dabara.exe" | Out-File -Append -Encoding utf8 $env:GITHUB_ENV
+
+      - name: Smoke test (examples, new project, tests, formatter, errors, language server, no leaked paths)
+        shell: bash
+        env:
+          LEAK_CHECK: "1"
+        run: bash scripts/smoke.sh
+
+      - name: Uninstall leaves nothing behind (macOS / Linux)
+        if: runner.os != 'Windows'
+        run: |
+          sh install.sh --uninstall
+          test ! -e "$HOME/.dabara"
+
+  mark-bad:
+    needs: verify
+    if: failure() && github.event_name == 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Flip the release to pre-release and say why
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release edit "$TAG" --repo "${{ github.repository }}" --prerelease
+          gh release comment "$TAG" --repo "${{ github.repository }}" --body "Automatic verification failed on at least one platform — see the Actions run. This release was marked as a pre-release." || true

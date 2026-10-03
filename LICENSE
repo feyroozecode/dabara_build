@@ -1,0 +1,31 @@
+DRAFT — NOT YET FINAL.
+The repository owner has not yet chosen the license for the Dabara program (roadmap decision D1). The
+terms below are a plain-language placeholder describing the intended default; they have not been
+reviewed by a lawyer. Replace this file before the first non-preview release.
+
+==============================================================================================
+DABARA — TERMS OF USE
+==============================================================================================
+
+PART 1 — THE DABARA PROGRAM (the `dabara` executable and the archives that contain it)
+
+Copyright (c) the Dabara authors. All rights reserved except as stated here.
+
+You may, free of charge:
+  1. install and run the program on any number of computers, for any purpose, including commercial;
+  2. copy and redistribute the program UNMODIFIED, with this file and its SHA-256 checksum;
+  3. run programs you write with it, and keep all rights to those programs.
+
+You may not:
+  1. modify the program, or reverse engineer, decompile or disassemble it, except where the law
+     forbids this restriction;
+  2. remove or alter any notice in it;
+  3. present it as your own work.
+
+THE PROGRAM IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. TO THE EXTENT THE LAW ALLOWS, THE
+AUTHORS ARE NOT LIABLE FOR ANY DAMAGE ARISING FROM ITS USE.
+
+PART 2 — DOCUMENTATION AND EXAMPLES (the files in `docs/` and `examples/`)
+
+You may copy, share and adapt them, for any purpose, provided you keep a credit to the Dabara
+project. They are provided "as is", without warranty.

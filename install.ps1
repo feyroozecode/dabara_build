@@ -75,7 +75,7 @@ if (-not $Target) {
 if ($Version -eq 'latest') {
   try { $releases = @(Invoke-RestMethod -UseBasicParsing -Uri "${ApiUrl}?per_page=1") } catch { $releases = @() }
   if ($releases.Count -eq 0 -or -not $releases[0].tag_name) {
-    Fail "could not find a release at $ApiUrl - is anything published yet? Try -Version <tag>"
+    Fail "no Dabara release is published yet, so there is nothing to install. Check https://github.com/$Repo/releases (or pass -Version <tag> once one exists)."
   }
   $Tag = [string]$releases[0].tag_name
 } elseif ($Version.StartsWith('v')) { $Tag = $Version } else { $Tag = "v$Version" }

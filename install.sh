@@ -102,7 +102,7 @@ sha256_of() { # sha256_of <file>
 latest_tag() {
   # first "tag_name" wherever it sits (pretty-printed or compact JSON): extract each pair, take the first
   tag=$(fetch_stdout "$API_URL?per_page=1" | grep -o '"tag_name"[[:space:]]*:[[:space:]]*"[^"]*"' | head -n 1 | sed 's/.*"\([^"]*\)"$/\1/') || true
-  [ -n "$tag" ] || die "could not find a release at $API_URL — is anything published yet? Try --version <tag>"
+  [ -n "$tag" ] || die "no Dabara release is published yet, so there is nothing to install. Check https://github.com/$REPO/releases (or pass --version <tag> once one exists)."
   printf '%s\n' "$tag"
 }
 

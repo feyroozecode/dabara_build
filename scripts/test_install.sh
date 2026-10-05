@@ -161,7 +161,7 @@ if command -v python3 >/dev/null 2>&1; then
   D="$WORK/home11/bin"
   out=$(DABARA_BASE_URL="http://127.0.0.1:$PORT/dl" DABARA_API_URL="http://127.0.0.1:$PORT/releases" DABARA_TARGET="$TARGET" DABARA_INSTALL_DIR="$D" sh "$INSTALL" 2>&1); code=$?
   [ $code -ne 0 ] && ok "no parsable release list: non-zero exit" || bad "no parsable release list"
-  case "$out" in *"could not find a release"*) ok "...with a clear message" ;; *) bad "clear message ($out)" ;; esac
+  case "$out" in *"no Dabara release is published yet"*) ok "...with a clear message" ;; *) bad "clear message ($out)" ;; esac
   check "...and nothing installed" test ! -e "$D/dabara"
 else
   echo "  skip  python3 not available — HTTP tests skipped"
